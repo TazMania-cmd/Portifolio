@@ -158,6 +158,7 @@ export const ProjectCard = ({
   role,
   stack,
   caseStudy,
+  hideProjectButton,
 }) => {
   const updatedDate = updatedAt
     ? new Intl.DateTimeFormat('pt-BR', { month: 'short', year: 'numeric' }).format(new Date(updatedAt))
@@ -232,10 +233,12 @@ export const ProjectCard = ({
           </div>
         )}
         <div className="project-actions">
-          <a className="btn-view" href={projectUrl} target="_blank" rel="noreferrer">
-            {hasProjectLink ? 'Abrir projeto' : 'Ver repositorio'}
-          </a>
-          {hasProjectLink && (
+          {!hideProjectButton && (
+            <a className="btn-view" href={projectUrl} target="_blank" rel="noreferrer">
+              {hasProjectLink ? 'Abrir projeto' : 'Ver repositorio'}
+            </a>
+          )}
+          {(hasProjectLink || hideProjectButton) && (
             <a className="btn-source" href={repoUrl} target="_blank" rel="noreferrer">
               Ver codigo
             </a>

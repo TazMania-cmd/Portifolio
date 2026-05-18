@@ -20,6 +20,12 @@ const HIDDEN_REPOS = ['test', 'teste', 'estudos-soltos'];
 const PROJECT_FILTERS = ['Todos', 'Front-end', 'Landing Page', 'React', 'API', 'Full-stack'];
 
 const PROJECT_DETAILS = {
+  'contador-semanal': {
+    hideProjectButton: true,
+  },
+  'Contador-Semanal': {
+    hideProjectButton: true,
+  },
   Portifolio: {
     title: 'Portfolio pessoal',
     description: 'Portfolio moderno com React, Vite, GitHub API, cards dinamicos e visual glassmorphism responsivo.',
@@ -61,8 +67,8 @@ const contactLinks = [
   },
   {
     label: 'Email',
-    value: 'Adicionar email',
-    href: 'mailto:',
+    value: 'gabrielwilsonvr@gmail.com',
+    href: 'https://gmail.com',
   },
   {
     label: 'LinkedIn',
@@ -108,6 +114,10 @@ function buildProjectStack(repo) {
   });
 
   return Array.from(stack);
+}
+
+function getProjectDetails(repoName) {
+  return PROJECT_DETAILS[repoName] || PROJECT_DETAILS[repoName.toLowerCase()] || {};
 }
 
 function readCachedGithubData() {
@@ -235,8 +245,8 @@ function App() {
         return !repo.fork && !repo.archived && !isHidden && hasUsefulSignal;
       })
       .sort((repoA, repoB) => {
-        const repoADetails = PROJECT_DETAILS[repoA.name] || {};
-        const repoBDetails = PROJECT_DETAILS[repoB.name] || {};
+        const repoADetails = getProjectDetails(repoA.name);
+        const repoBDetails = getProjectDetails(repoB.name);
         const repoAFeatured = FEATURED_REPOS.includes(repoA.name) ? 1 : 0;
         const repoBFeatured = FEATURED_REPOS.includes(repoB.name) ? 1 : 0;
         const priorityDifference = (repoBDetails.priority || 0) - (repoADetails.priority || 0);
@@ -261,7 +271,7 @@ function App() {
 
     return ownRepos.slice(0, 6).map((repo, index) => ({
       ...(() => {
-        const details = PROJECT_DETAILS[repo.name] || {};
+        const details = getProjectDetails(repo.name);
 
         return {
           title: details.title || repo.name.replaceAll('-', ' '),
@@ -271,6 +281,7 @@ function App() {
           role: details.role || 'Desenvolvimento front-end',
           stack: details.stack || buildProjectStack(repo),
           caseStudy: details.caseStudy,
+          hideProjectButton: Boolean(details.hideProjectButton),
         };
       })(),
       featured: FEATURED_REPOS.includes(repo.name) || index === 0,
