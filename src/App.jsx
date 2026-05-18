@@ -13,6 +13,8 @@ import {
 import heroImage from './assets/hero.png';
 
 const GITHUB_USERNAME = 'TazMania-cmd';
+const GITHUB_CACHE_KEY = 'portfolio-github-data-v1';
+const GITHUB_CACHE_TTL = 1000 * 60 * 30;
 const FEATURED_REPOS = ['Portifolio', 'portfolio', 'portifolio'];
 const HIDDEN_REPOS = ['test', 'teste', 'estudos-soltos'];
 const PROJECT_FILTERS = ['Todos', 'Front-end', 'Landing Page', 'React', 'API', 'Full-stack'];
@@ -108,10 +110,43 @@ function buildProjectStack(repo) {
   return Array.from(stack);
 }
 
+function readCachedGithubData() {
+  try {
+    const cachedData = localStorage.getItem(GITHUB_CACHE_KEY);
+
+    if (!cachedData) {
+      return null;
+    }
+
+    const parsedData = JSON.parse(cachedData);
+    const isFresh = Date.now() - parsedData.timestamp < GITHUB_CACHE_TTL;
+
+    return isFresh ? parsedData : null;
+  } catch {
+    return null;
+  }
+}
+
+function writeCachedGithubData(user, repos) {
+  try {
+    localStorage.setItem(
+      GITHUB_CACHE_KEY,
+      JSON.stringify({
+        user,
+        repos,
+        timestamp: Date.now(),
+      }),
+    );
+  } catch {
+    // Cache is an optimization only; ignore storage failures.
+  }
+}
+
 function App() {
-  const [githubUser, setGithubUser] = useState(fallbackUser);
-  const [repos, setRepos] = useState([]);
-  const [isLoadingRepos, setIsLoadingRepos] = useState(true);
+  const [cachedGithubData] = useState(readCachedGithubData);
+  const [githubUser, setGithubUser] = useState(cachedGithubData?.user || fallbackUser);
+  const [repos, setRepos] = useState(cachedGithubData?.repos || []);
+  const [isLoadingRepos, setIsLoadingRepos] = useState(!cachedGithubData?.repos?.length);
   const [githubError, setGithubError] = useState(false);
   const [activeFilter, setActiveFilter] = useState('Todos');
 
@@ -143,6 +178,7 @@ function App() {
           ...userData,
         });
         setRepos(repoData);
+        writeCachedGithubData({ ...fallbackUser, ...userData }, repoData);
         setGithubError(false);
       } catch (error) {
         if (error.name !== 'AbortError') {
@@ -165,6 +201,11 @@ function App() {
   useEffect(() => {
     const elements = document.querySelectorAll('.reveal');
 
+    if (!('IntersectionObserver' in window)) {
+      elements.forEach((element) => element.classList.add('is-visible'));
+      return undefined;
+    }
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -174,13 +215,15 @@ function App() {
           }
         });
       },
-      { rootMargin: '0px 0px -12% 0px', threshold: 0.12 },
+      { rootMargin: '180px 0px 120px 0px', threshold: 0.01 },
     );
 
-    elements.forEach((element) => observer.observe(element));
+    requestAnimationFrame(() => {
+      elements.forEach((element) => observer.observe(element));
+    });
 
     return () => observer.disconnect();
-  }, [repos]);
+  }, []);
 
   const projects = useMemo(() => {
     const ownRepos = repos
