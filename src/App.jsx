@@ -18,6 +18,9 @@ const GITHUB_CACHE_TTL = 1000 * 60 * 30;
 const FEATURED_REPOS = ['Portifolio', 'portfolio', 'portifolio'];
 const HIDDEN_REPOS = ['test', 'teste', 'estudos-soltos'];
 const PROJECT_FILTERS = ['Todos', 'Front-end', 'Landing Page', 'React', 'API', 'Full-stack'];
+const BUDGET_MESSAGE = encodeURIComponent(
+  'Olá Gabriel, quero um orçamento para criar uma presença digital profissional para meu negócio.',
+);
 
 const PROJECT_DETAILS = {
   'contador-semanal': {
@@ -27,26 +30,26 @@ const PROJECT_DETAILS = {
     hideProjectButton: true,
   },
   Portifolio: {
-    title: 'Portfolio pessoal',
-    description: 'Portfolio moderno com React, Vite, GitHub API, cards dinamicos e visual glassmorphism responsivo.',
-    role: 'Front-end, UI Design, integracao com API',
+    title: 'Presença digital premium',
+    description: 'Uma vitrine profissional pensada para apresentar serviços com clareza, reforçar autoridade e facilitar o primeiro contato.',
+    role: 'Estratégia visual, experiência responsiva e publicação Web',
     stack: ['React', 'Vite', 'CSS', 'GitHub API'],
-    category: 'Front-end',
+    category: 'Landing Page',
     priority: 100,
     caseStudy: {
-      problem: 'Apresentar projetos reais com uma experiencia visual mais profissional.',
-      solution: 'Criar uma interface responsiva que consome o GitHub e destaca links de deploy e codigo.',
-      result: 'Portfolio mais curado, atualizado automaticamente e pronto para compartilhar.',
+      problem: 'Transformar um perfil técnico em uma apresentação clara para clientes e empresas.',
+      solution: 'Organizar mensagem, projetos, serviços e prova visual em uma experiência fluida no desktop e no mobile.',
+      result: 'Uma presença digital mais confiável, direta e pronta para gerar conversas de orçamento.',
     },
   },
   portfolio: {
-    title: 'Portfolio pessoal',
-    category: 'Front-end',
+    title: 'Presença digital premium',
+    category: 'Landing Page',
     priority: 100,
   },
   portifolio: {
-    title: 'Portfolio pessoal',
-    category: 'Front-end',
+    title: 'Presença digital premium',
+    category: 'Landing Page',
     priority: 100,
   },
 };
@@ -55,11 +58,16 @@ const fallbackUser = {
   name: 'Gabriel Wilson',
   login: GITHUB_USERNAME,
   avatar_url: `https://github.com/${GITHUB_USERNAME}.png`,
-  bio: 'Desenvolvedor front-end focado em interfaces modernas.',
+  bio: 'Desenvolvedor web focado em landing pages, sites responsivos e presença digital para negócios.',
   html_url: `https://github.com/${GITHUB_USERNAME}`,
 };
 
 const contactLinks = [
+  {
+    label: 'WhatsApp',
+    value: 'Solicitar orçamento',
+    href: `https://api.whatsapp.com/send?text=${BUDGET_MESSAGE}`,
+  },
   {
     label: 'GitHub',
     value: `github.com/${GITHUB_USERNAME}`,
@@ -68,12 +76,7 @@ const contactLinks = [
   {
     label: 'Email',
     value: 'gabrielwilsonvr@gmail.com',
-    href: 'https://gmail.com',
-  },
-  {
-    label: 'LinkedIn',
-    value: 'Adicionar LinkedIn',
-    href: '#home',
+    href: `mailto:gabrielwilsonvr@gmail.com?subject=Or%C3%A7amento%20para%20site%20profissional&body=${BUDGET_MESSAGE}`,
   },
 ];
 
@@ -105,7 +108,7 @@ function inferProjectCategory(repo) {
 }
 
 function buildProjectStack(repo) {
-  const stack = new Set([repo.language || 'Codigo']);
+  const stack = new Set([repo.language || 'Código']);
 
   (repo.topics || []).forEach((topic) => {
     if (stack.size < 5) {
@@ -288,7 +291,7 @@ function App() {
       projectUrl: repo.homepage?.trim() || repo.html_url,
       repoUrl: repo.html_url,
       hasProjectLink: Boolean(repo.homepage?.trim()),
-      language: repo.language || 'Codigo',
+      language: repo.language || 'Código',
       stars: repo.stargazers_count,
       updatedAt: repo.updated_at,
       topics: repo.topics || [],
@@ -323,18 +326,18 @@ function App() {
       <main className="main-content">
         <section className="hero-section reveal" id="home">
           <div className="hero-copy">
-            <p className="hero-kicker">Desenvolvedor Front-end</p>
+            <p className="hero-kicker">Desenvolvedor Web para negócios locais</p>
             <h1 className="hero-title">
-              Interfaces modernas com React, Next.js e detalhe visual.
+              Sites modernos que transformam visitas em contatos.
             </h1>
             <p className="hero-subtitle">
-              Construo experiencias digitais responsivas, bem acabadas e
-              conectadas a produtos reais, combinando codigo limpo, UI moderna
-              e atencao ao usuario.
+              Crio landing pages e sites institucionais com visual premium,
+              carregamento rápido e mensagem clara para sua empresa parecer
+              mais profissional desde o primeiro clique.
             </p>
             <div className="hero-actions">
-              <a href="#projects" className="btn-primary">Ver projetos</a>
-              <a href="#contact" className="btn-secondary">Contato</a>
+              <a href="#contact" className="btn-primary">Solicitar orçamento</a>
+              <a href="#projects" className="btn-secondary">Ver trabalhos</a>
             </div>
           </div>
 
@@ -344,11 +347,11 @@ function App() {
             </div>
             <div className="metric-card metric-card-top glass">
               <span>{publicRepoCount || '6+'}</span>
-              <p>Repositorios</p>
+              <p>Projetos base</p>
             </div>
             <div className="metric-card metric-card-bottom glass">
               <span>{liveProjectsCount || '3+'}</span>
-              <p>Projetos online</p>
+              <p>Experiências online</p>
             </div>
           </div>
         </section>
@@ -356,16 +359,18 @@ function App() {
         <section className="about-section reveal" id="about">
           <SectionHeader
             eyebrow="Sobre mim"
-            title="Front-end com olhar de produto."
-            description="Meu foco e transformar ideias em interfaces claras, responsivas e agradaveis de usar."
+            title="Design, código e estratégia para vender melhor sua imagem."
+            description="Meu trabalho conecta estética moderna, clareza comercial e experiência mobile para empresas que precisam ser levadas a sério online."
           />
           <div className="about-grid">
             <div className="about-panel glass">
               <p>
-                Trabalho com React, Next.js, TypeScript e Tailwind para criar
-                paginas, portifolios, landing pages e experiencias web com
-                acabamento visual forte. Gosto de unir estrutura, performance e
-                interacoes sutis para deixar o produto mais profissional.
+                Sou Gabriel Wilson, desenvolvedor web focado em criar páginas
+                profissionais para negócios, prestadores de serviço e marcas que
+                querem melhorar a forma como são percebidos na internet. Meu
+                processo combina layout limpo, copy direta, responsividade e
+                chamadas de contato bem posicionadas para transformar uma ideia
+                simples em uma presença digital moderna e confiável.
               </p>
             </div>
             <SkillShowcase />
@@ -380,8 +385,8 @@ function App() {
           <div className="projects-content">
             <SectionHeader
               eyebrow="Projetos"
-              title="Repositorios conectados ao GitHub."
-              description="Uma selecao curada dos projetos com prioridade para deploy, stack, contexto e codigo."
+              title="Projetos pensados como experiências reais."
+              description="Uma seleção de interfaces com foco em apresentação profissional, navegação simples, responsividade e caminho claro para conversão."
             />
             <div className="project-toolbar glass">
               <div className="filter-group" aria-label="Filtrar projetos">
@@ -400,11 +405,11 @@ function App() {
             </div>
             <div className="project-grid">
               {isLoadingRepos && (
-                <div className="repo-loading glass">Carregando repositorios do GitHub...</div>
+                <div className="repo-loading glass">Carregando repositórios do GitHub...</div>
               )}
               {!isLoadingRepos && githubError && (
                 <div className="repo-empty glass">
-                  Nao foi possivel carregar os projetos agora.
+                  Não foi possível carregar os projetos agora.
                   <a href={`https://github.com/${GITHUB_USERNAME}`} target="_blank" rel="noreferrer">Ver GitHub</a>
                 </div>
               )}

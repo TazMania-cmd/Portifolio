@@ -9,51 +9,59 @@ const skills = [
 
 const services = [
   {
-    title: 'Landing pages',
-    description: 'Paginas responsivas, rapidas e focadas em conversao.',
+    title: 'Landing pages premium',
+    description: 'Páginas objetivas para apresentar uma oferta, gerar confiança e facilitar pedidos de orçamento.',
     icon: 'LP',
   },
   {
-    title: 'Interfaces React',
-    description: 'Componentes reutilizaveis, estados claros e UI moderna.',
-    icon: 'RX',
+    title: 'Sites institucionais',
+    description: 'Sites claros para empresas locais, serviços e marcas que precisam transmitir profissionalismo.',
+    icon: 'SI',
   },
   {
-    title: 'Portifolios',
-    description: 'Apresentacao profissional para devs, designers e projetos.',
-    icon: 'PF',
+    title: 'Design responsivo',
+    description: 'Layouts preparados para celular, tablet e desktop, com leitura fácil e botões acessíveis.',
+    icon: 'DR',
   },
   {
-    title: 'Dashboards',
-    description: 'Telas organizadas para dados, listas, filtros e acoes.',
-    icon: 'DB',
+    title: 'WhatsApp integrado',
+    description: 'Chamadas de contato posicionadas nos pontos certos para reduzir atrito entre visita e conversa.',
+    icon: 'WA',
+  },
+  {
+    title: 'Interfaces modernas',
+    description: 'Experiências visuais limpas, atuais e coerentes com a percepção que sua empresa quer passar.',
+    icon: 'UI',
+  },
+  {
+    title: 'Experiência mobile',
+    description: 'Ajustes de hierarquia, velocidade percebida e navegação para quem chega pelo smartphone.',
+    icon: 'MB',
   },
 ];
 
 const experience = [
   {
     period: 'Atual',
-    title: 'Projetos pessoais e portfolio',
-    description: 'Criacao de interfaces com React, consumo de APIs e publicacao de projetos no GitHub.',
+    title: 'Presença digital para negócios',
+    description: 'Criação de páginas profissionais com foco em apresentação, responsividade e contato fácil.',
   },
   {
     period: 'Estudos',
-    title: 'Front-end moderno',
-    description: 'Pratica com TypeScript, Next.js, Tailwind, responsividade, componentes e boas praticas de UI.',
+    title: 'Front-end moderno aplicado',
+    description: 'Prática constante com tecnologias atuais para entregar interfaces rápidas, organizadas e bem acabadas.',
   },
   {
     period: 'Freelas',
-    title: 'Paginas e ajustes visuais',
-    description: 'Construcao de telas, melhorias de layout, glassmorfismo e refinamento de experiencia.',
+    title: 'Páginas e melhorias visuais',
+    description: 'Construção de telas, refinamento de layout e ajustes que deixam a experiência mais clara para o cliente.',
   },
 ];
 
 export const AuroraBackground = () => (
-  <div className="aurora-container dark-glass-bg">
-    <div className="orb orb-1"></div>
-    <div className="orb orb-2"></div>
-    <div className="orb orb-3"></div>
-    <div className="orb orb-4"></div>
+  <div className="aurora-container premium-bg">
+    <div className="light-plane light-plane-1"></div>
+    <div className="light-plane light-plane-2"></div>
     <div className="ambient-grid"></div>
   </div>
 );
@@ -88,11 +96,11 @@ export const Sidebar = ({ user }) => (
         />
       </a>
       <h2 className="profile-name">{user.name || user.login}</h2>
-      <p className="profile-role">Front-end Developer</p>
-      <p className="profile-role" style={{ fontSize: '0.8rem' }}>{user.bio || 'Desenvolvedor front-end focado em interfaces modernas.'}</p>
+      <p className="profile-role">Desenvolvedor web</p>
+      <p className="profile-role" style={{ fontSize: '0.8rem' }}>{user.bio || 'Landing pages, sites responsivos e presença digital para negócios.'}</p>
 
       <div style={{ textAlign: 'left', marginTop: '24px' }} className="notranslate" translate="no">
-        <p style={{ fontSize: '0.8rem', fontWeight: 700, marginBottom: '12px' }}>Skills</p>
+        <p style={{ fontSize: '0.8rem', fontWeight: 700, marginBottom: '12px' }}>Habilidades</p>
         <div className="skill-tags" translate="no">
           {skills.map((skill) => (
             <span key={skill.name} className="skill-tag notranslate" translate="no">{skill.name}</span>
@@ -106,9 +114,9 @@ export const Sidebar = ({ user }) => (
 export const ServicesSection = () => (
   <section className="services-section reveal" id="services">
     <SectionHeader
-      eyebrow="Servicos"
-      title="O que posso construir."
-      description="Solucoes front-end para apresentar, validar e evoluir produtos digitais."
+      eyebrow="Serviços"
+      title="Serviços para melhorar sua presença online."
+      description="Entrega enxuta, visual atual e foco no que importa para um negócio: ser encontrado, parecer profissional e receber contatos."
     />
     <div className="services-grid">
       {services.map((service) => (
@@ -125,9 +133,9 @@ export const ServicesSection = () => (
 export const ExperienceSection = () => (
   <section className="experience-section reveal" id="experience">
     <SectionHeader
-      eyebrow="Experiencia"
-      title="Evolucao pratica em projetos reais."
-      description="Uma linha do tempo simples para mostrar estudo aplicado, projetos e entregas."
+      eyebrow="Experiência"
+      title="Evolução prática com foco em entrega."
+      description="Trabalho com páginas objetivas, boa apresentação e detalhes de interface que melhoram a percepção do usuário."
     />
     <div className="timeline glass">
       {experience.map((item) => (
@@ -176,7 +184,7 @@ export const ProjectCard = ({
     <article className={`project-card glass ${featured ? 'featured' : ''}`}>
       <div className="project-cover">
         <span className={`project-status ${hasProjectLink ? 'is-live' : ''}`}>
-          {hasProjectLink ? 'Online' : 'Codigo'}
+          {hasProjectLink ? 'Online' : 'Conceito'}
         </span>
         <div className="project-cover-mark notranslate" translate="no">{projectInitials}</div>
         <div className="project-cover-content">
@@ -199,7 +207,7 @@ export const ProjectCard = ({
         <p className="project-role">{role}</p>
         <div className="repo-meta">
           <span>{language}</span>
-          <span>{stars} estrelas</span>
+          <span>{stars} favoritos</span>
           <span>Atualizado {updatedDate}</span>
         </div>
         {!!stack.length && (
@@ -223,7 +231,7 @@ export const ProjectCard = ({
               <p>{caseStudy.problem}</p>
             </div>
             <div>
-              <span>Solucao</span>
+              <span>Solução</span>
               <p>{caseStudy.solution}</p>
             </div>
             <div>
@@ -235,12 +243,12 @@ export const ProjectCard = ({
         <div className="project-actions">
           {!hideProjectButton && (
             <a className="btn-view" href={projectUrl} target="_blank" rel="noreferrer">
-              {hasProjectLink ? 'Abrir projeto' : 'Ver repositorio'}
+              {hasProjectLink ? 'Abrir experiência' : 'Ver detalhes'}
             </a>
           )}
           {(hasProjectLink || hideProjectButton) && (
             <a className="btn-source" href={repoUrl} target="_blank" rel="noreferrer">
-              Ver codigo
+              Ver bastidores
             </a>
           )}
         </div>
@@ -254,8 +262,8 @@ export const ContactSection = ({ links, githubUser }) => (
     <div className="contact-card glass">
       <SectionHeader
         eyebrow="Contato"
-        title="Vamos construir algo bem apresentado."
-        description="Use os links abaixo para falar comigo ou acessar meus projetos."
+        title="Pronto para deixar sua empresa melhor apresentada?"
+        description="Me chame com uma ideia simples do que você precisa. Eu ajudo a transformar isso em uma página moderna, responsiva e direta para gerar contato."
       />
       <div className="contact-links">
         {links.map((link) => (
@@ -271,7 +279,7 @@ export const ContactSection = ({ links, githubUser }) => (
         ))}
       </div>
       <a className="btn-primary contact-main-action" href={githubUser.html_url} target="_blank" rel="noreferrer">
-        Ver GitHub
+        Ver base técnica
       </a>
     </div>
   </section>
